@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -17,9 +14,13 @@ namespace WebApp.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public async void OnGet()
         {
-
+            using (var client = new HttpClient { BaseAddress = new Uri("https://localhost:5001") })
+            {
+                var response = await client.GetStringAsync("products");
+                _logger.LogInformation(response);
+            }
         }
     }
 }
