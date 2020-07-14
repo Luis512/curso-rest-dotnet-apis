@@ -31,6 +31,19 @@ exports.getSomething = function(req, res) {
     res.json({ message: 'Funcion encontrada.' }); 
 };
 ```  
+ <p><h5>Routes.js</h5>  
+ 
+ ```js
+'use strict';
+
+module.exports = function(app){
+    var routes = require('../controllers/controller');
+
+    app.route('/something')
+        .get(routes.getSomething);
+};
+```  
+
  <p><h5>Resultado antes de implementar CORS</h5>
  
 ```
