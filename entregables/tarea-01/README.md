@@ -5,8 +5,33 @@
                 El manejo de solicitudes CORS se hace mediante el uso de HTTP headers siguiendo el siguiente standard :Access-Control-Allow-Origin, Access-Control-Allow-Credentials,Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Expose-Headers, Access-Control-Max-Age, Access-Control-Request-Headers, Access-Control-Request-Method y Origin.</p>
     </li>
     <li><h4>Incluir un ejemplo de solucion en C#, JavaScript, Python, Go o algun otro lenguaje</h4>
-        <p>
-        </p>
+        <p><h5>Server.js</h5>     
+        
+```js
+var express = require('express'),
+  app = express(),
+  port = process.env.PORT || 3000;
+
+var cors = require('cors');
+
+var routes = require('./api/routes/routes'); 
+routes(app);
+
+app.use(cors());
+app.listen(port);
+```   
+   </p>
+    <p><h5>Controller.js</h5>     
+        
+```js
+'use strict';
+
+exports.getSomething = function(req, res) {  
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ message: 'Task successfully obtained.' }); 
+};
+```   
+   </p>
     </li>
     <li><h4>Que es Docker y en que consiste el concepto de Imagen y Contenedor?</h4>
         <p>
