@@ -44,13 +44,13 @@ module.exports = function(app){
 };
 ```  
 
- <p><h5>Resultado antes de implementar CORS</h5>
+ <p><h5>Resultado antes de establecer Access-Control-Allow-Origin</h5>
  
 ```
 Access to fetch at 'http://localhost:3000/something' from origin 'chrome-search://local-ntp' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 ```
 
-<p><h5>Resultado despues de implementar CORS</h5>
+<p><h5>Resultado despues de establecer Access-Control-Allow-Origin</h5>
 
 ```
 message: "Funcion encontrada."
