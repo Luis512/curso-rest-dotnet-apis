@@ -56,7 +56,7 @@ Access to fetch at 'http://localhost:3000/something' from origin 'chrome-search:
 message: "Funcion encontrada."
 ```
 
-Nota: Esto se probo utilizando el siguiente comando en la consola de Chrome:
+<h5>Nota:</h5> Esto se probo utilizando el siguiente comando en la consola de Chrome:
 
 ```
 fetch("http://localhost:3000/something").then(a => a.text).then(console.log)
