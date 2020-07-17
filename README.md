@@ -1,18 +1,5 @@
 # Curso: RESTful Web APIs (.NET)
 
-## Contacto
-
-<table>
-  <tr>
-    <td align="center"><a href="http://stvansolano.github.io/blog/"><img src="https://avatars2.githubusercontent.com/u/3009519?v=4" width="100px;" alt=""/><br /><sub><b>Esteban Solano G. </b><br/><b>@stvansolano</b></sub></a>
-    </td>
-  </tr>
-</table>
-
-- Esteban Solano @stvansolano 
-- Email: stvansolano@outlook.com 
-- Blog: http://stvansolano.github.io/blog
-
 ## Instalacion y Herramientas:
 
 - https://dotnet.microsoft.com/download/dotnet-core/
