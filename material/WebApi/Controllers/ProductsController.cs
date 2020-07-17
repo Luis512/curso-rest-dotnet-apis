@@ -8,20 +8,39 @@ namespace WebApi.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        private static readonly string[] ProductCatalog = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Jeans", "T-shirt", "Pants"
         };
 
         [HttpGet]
-        public IEnumerable<object> Get()
+        public ActionResult<IEnumerable<object>> Get()
         {
             int i = 0;
-            return Summaries.Select(m => new
+            var result = ProductCatalog.Select(m => new
             {
                 Name = m,
                 Id = i++
             });
+
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public object GetById(int id)
+        {
+            int i = 0;
+            var result = ProductCatalog.Select(m => new
+            {
+                Name = m,
+                Id = i++
+            }).ToList();
+
+            if(result.ElementAtOrDefault(id) == null)
+            {
+                return NotFound();
+            }
+            return result[id];
         }
     }
 }
