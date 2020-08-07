@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using WebApi.Controllers;
+using WebApi.Infrastructure.Data.Models;
 
 namespace WebApi
 {
@@ -34,10 +37,20 @@ namespace WebApi
             });
 
             services.AddSingleton<ProductRepository>();
-            services.AddSingleton<ApplicationSettings>();
-            var applicationSettings = Configuration.GetSection("AppSettings");
-            services.Configure<ApplicationSettings>(applicationSettings);
+            var applicationSettings = new ApplicationSettings();
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            appSettingsSection.Bind(applicationSettings);
+
+            var var1 = Environment.GetEnvironmentVariable("AppSettings__Variable");
+            if (!string.IsNullOrEmpty(var1))
+            {
+                applicationSettings.Variable = var1;
+            }
+            services.AddSingleton(applicationSettings);
             services.AddControllers();
+            services.AddDbContext<AdventureworksContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultDatabase")));
+
 
         }
 

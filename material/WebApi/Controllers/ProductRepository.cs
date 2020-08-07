@@ -1,10 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebApi.Infrastructure.Data.Models;
 
 namespace WebApi.Controllers
 {
     public class ProductRepository
     {
+        public AdventureworksContext UnitOfWork { get; set; }
+
+        public ProductRepository(AdventureworksContext context)
+        {
+            UnitOfWork = context;
+        }
+
        private readonly List<string> ProductCatalog = new List<string>
        {
             "Jeans", "T-shirt", "Pants"

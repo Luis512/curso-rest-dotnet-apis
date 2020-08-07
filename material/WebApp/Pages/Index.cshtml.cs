@@ -20,8 +20,10 @@ namespace WebApp.Pages
         public List<Product> Products { get; set; } = new List<Product>();
 
         public async Task<IActionResult> OnGet()
-        {            
-            using (var client = new HttpClient { BaseAddress = new Uri("https://localhost:44300/api/") })
+        {
+            var webApi = System.Environment.GetEnvironmentVariable("ServerUrl");
+            _logger.LogInformation($"===== {webApi}");
+            using (var client = new HttpClient { BaseAddress = new Uri(webApi) })
             {
                 var response = await client.GetStringAsync("products");
                 ViewData["Products"] = JsonConvert.DeserializeObject<List<Product>>(response); 

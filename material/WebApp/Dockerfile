@@ -1,14 +1,16 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["WebApp.csproj", "./"]
-RUN dotnet restore "./WebApp.csproj"
+COPY ["WebApp/WebApp.csproj", "WebApp/"]
+RUN dotnet restore "WebApp/WebApp.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/WebApp"
 RUN dotnet build "WebApp.csproj" -c Release -o /app/build
 
 FROM build AS publish

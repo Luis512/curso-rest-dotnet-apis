@@ -6,9 +6,11 @@ services:
     container_name: webapi
     build:
       context: material
-      dockerfile: WebApi/DockerFile    
+      dockerfile: WebApi/Dockerfile    
     ports:
       - 8081:80
+    environment: 
+      - AppSettings__Variable="This is from Docker" 
     depends_on: 
     - db-sql-server
   
@@ -16,9 +18,10 @@ services:
     container_name: webapp
     build:
       context: material
-      dockerfile: WebApp/DockerFile
+      dockerfile: WebApp/Dockerfile
     environment: 
-      - ServerUrl=http://webapi:80
+      - ServerUrl=http://webapi:80/api/
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 80:80
     depends_on: 
