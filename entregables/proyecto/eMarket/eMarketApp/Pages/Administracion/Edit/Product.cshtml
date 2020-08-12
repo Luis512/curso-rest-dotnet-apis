@@ -1,0 +1,40 @@
+﻿@page
+@model eMarketApp.Pages.Administracion.Edit.ProductModel
+@{
+    ViewData["Title"] = "Product";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="font-weight-light text-center text-lg-center mt-4 mb-0">Editar Producto</h1>
+
+<hr class="mt-2 mb-5">
+
+
+@using (Html.BeginForm("Post", "Form", FormMethod.Post, new { @name = "MainForm" }))
+{
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label for="validationDefault01">Produto</label>
+            @Html.EditorFor(m => m.product.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationDefault01">Categoria</label>
+            @Html.EditorFor(m => m.productCategory.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationDefaultUsername">Precio</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                @Html.EditorFor(m => m.product.Price, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationDefault01">Cantidad Disponible</label>
+            @Html.EditorFor(m => m.product.Stock, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Guardar</button>
+}
+
