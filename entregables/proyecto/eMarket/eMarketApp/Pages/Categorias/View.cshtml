@@ -11,30 +11,33 @@
     </div>
 </section>
 <hr class="mt-2 mb-5">
-<section class="jumbotron text-center">
-    <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Acciones</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var prod in Model.products)
-                {
+@using (Html.BeginForm())
+{
+    <section class="jumbotron text-center">
+        <div class="container">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td scope="row">@prod.Name</td>
-                        <td scope="row">@prod.Price</td>
-                        <td scope="row">@prod.Stock</td>
-                        <td scope="row"> <input type="submit" class="btn btn-danger my-2" asp-page-handler="AddToCart" asp-route-id="@prod.Id" value="Agregar a carrito" /></td>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Acciones</th>
+
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</section>
+                </thead>
+                <tbody>
+                    @foreach (var prod in Model.products)
+                    {
+                            <tr>
+                            <td scope="row">@prod.Name</td>
+                            <td scope="row">@prod.Price</td>
+                            <td scope="row">@prod.Stock</td>
+                            <td scope="row"> <input type="submit" class="btn btn-danger my-2" asp-page-handler="AddToCart" asp-route-idProd="@prod.Id" asp-route-idCat="@Model.categoria.Id" value="Agregar a carrito" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
 

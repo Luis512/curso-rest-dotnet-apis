@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using eMarketApp.Helpers;
 using eMarketApp.Repositories;
 using eMarketDomain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace eMarketApp.Pages.Categorias
     public class ViewModel : PageModel
     {
         private readonly ICategoryRepository _categoryRepository;
-        private IProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
         public Category categoria { get; set; }
 
@@ -32,6 +33,28 @@ namespace eMarketApp.Pages.Categorias
                 return Page();
             }
             return NotFound();
+        }
+        public async Task<IActionResult> OnPostAddToCart(int idProd, int idCat)
+        { 
+            var product = new Product();
+            product = await Task.Run(() => _productRepository.GetProductById(idProd));
+            if (SessionHelper.GetObject<Cart>(HttpContext.Session, "CART") == null)
+            {
+                var carrito = new Cart();
+                carrito.Total = product.Price;
+                carrito.Status = "PENDING";
+                carrito.Products = new List<Product>();
+                carrito.Products.Add(product);
+                SessionHelper.SetObject(HttpContext.Session, "CART", carrito);
+            }
+            else
+            {
+                var cart = SessionHelper.GetObject<Cart>(HttpContext.Session, "CART");
+                cart.Total = cart.Total + product.Price;
+                cart.Products.Add(product);
+                SessionHelper.SetObject(HttpContext.Session, "CART", cart);
+            }
+            return await this.OnGet(idCat);
         }
     }
 }

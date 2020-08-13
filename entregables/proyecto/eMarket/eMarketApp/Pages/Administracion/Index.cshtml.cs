@@ -31,6 +31,7 @@ namespace eMarketApp.Pages.Administracion
 
         public async Task<ActionResult> OnGet()
         {
+            ViewData["CurrentTab"] = "Category";
             categoryList = await _categoryRepository.GetCategories();
             productList = await _productRepository.GetProducts();
             categoryDropdown = await FillMarcaDropdown(categoryList);
