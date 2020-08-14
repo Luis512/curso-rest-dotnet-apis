@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using WebApi.Controllers;
 using WebApi.Infrastructure.Data.Models;
+using WebApi.Repositories;
 
 namespace WebApi
 {
@@ -36,7 +37,8 @@ namespace WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddSingleton<ProductRepository>();
+            services.AddScoped<ProductRepository>();
+            services.AddScoped<CustomerRepository>();
             var applicationSettings = new ApplicationSettings();
             var appSettingsSection = Configuration.GetSection("AppSettings");
             appSettingsSection.Bind(applicationSettings);
