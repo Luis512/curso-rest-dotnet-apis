@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApi.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -26,12 +26,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<object>> Get()
-        {
-            var result = _repository.Get();
-            _logger.LogInformation(_settings.Variable);
-            return Ok(result);
-        }
+        [Produces(typeof(ProductViewModel))]
+        
 
         [HttpGet("{id}")]
         public object GetById(int id)
@@ -45,24 +41,28 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] string name)
+        public IActionResult Post([FromBody] ProductViewModel request)
         {
-            _repository.Save(name);
-            var items = _repository.Get();
-            dynamic value = items.Last();
-            return CreatedAtAction(nameof(GetById), new { id = value.Id }, value);
+            _repository.Save(request);
+            return CreatedAtAction(nameof(GetById), new { id = request.Id }, request);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return new ObjectResult(new object()) { StatusCode = (int)HttpStatusCode.NotImplemented };
+            var result = _repository.Delete(id);
+            return result ? (IActionResult)Ok() : NotFound();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id)
+        public IActionResult Put(int id, [FromBody] ProductViewModel request)
         {
-            return new ObjectResult(new object()) { StatusCode = (int)HttpStatusCode.NotImplemented };
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = _repository.Update(id, request);
+            return result ? (IActionResult)Ok() : NotFound();
         }
 
 
