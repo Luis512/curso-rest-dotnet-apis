@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using eMarketApp.Helpers;
 using eMarketApp.Repositories;
 using eMarketDomain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace eMarketApp.Pages.Categorias
 {
+    [Authorize]
     public class ViewModel : PageModel
     {
         private readonly ICategoryRepository _categoryRepository;

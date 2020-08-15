@@ -1,11 +1,13 @@
 ﻿using eMarketApp.Repositories;
 using eMarketDomain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace eMarketApp.Pages.Productos
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly IProductRepository _productRepository;

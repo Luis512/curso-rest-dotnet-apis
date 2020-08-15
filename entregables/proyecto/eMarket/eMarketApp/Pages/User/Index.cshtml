@@ -1,0 +1,50 @@
+﻿@page
+@model eMarketApp.Pages.User.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+    <div class="jumbotron">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Usuario</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Username" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Nombre</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Name" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Direccion</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Direction" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Pais</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Country" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Telefono</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Telefono" />
+        </div>
+        <hr class="my-4">
+        <form method="post">
+            <input type="submit" class="btn btn-danger my-2" asp-page-handler="SignOff" value="Cerrar Sesion" />
+        </form>
+    </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Orden #</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">123564</th>
+            <td>12122009</td>
+            <td> </td>
+        </tr>
+    </tbody>
+</table>
+

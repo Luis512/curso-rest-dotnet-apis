@@ -9,6 +9,7 @@ namespace eMarketDB.Infrastructure.Data
         public decimal IdUser { get; set; }
         public decimal? Total { get; set; }
         public string Status { get; set; }
+        public DateTime? ProcessDate { get; set; }
 
         public virtual User IdUserNavigation { get; set; }
     }

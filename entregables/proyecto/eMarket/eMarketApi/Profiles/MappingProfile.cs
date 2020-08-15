@@ -17,6 +17,8 @@ namespace eMarketApi.Profiles
             CreateMap<Product, Products>();
             CreateMap<Review, Reviews>();
             CreateMap<Reviews, Review>();
+            CreateMap<Usuario, User>();
+            CreateMap<User, Usuario>();
         }
     }
 }

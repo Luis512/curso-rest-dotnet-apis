@@ -1,5 +1,6 @@
 ﻿using eMarketApp.Repositories;
 using eMarketDomain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace eMarketApp.Pages.Administracion
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IProductRepository _productRepository;

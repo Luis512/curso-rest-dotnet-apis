@@ -1,5 +1,6 @@
 using eMarketApp.Repositories;
 using eMarketApp.Repositories.Impl;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,10 +27,23 @@ namespace eMarketApp
             services.Configure<ApiSettings>(Configuration.GetSection("APIEndpoints"));
             services.AddSingleton<ApiSettings>();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Index");
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
+            });
+
+           
             //Inyecting repository classes           
             services.AddSingleton<ICategoryRepository, CategoryRepository>();
             services.AddSingleton<IProductRepository, ProductRepository>();
             services.AddSingleton<IReviewRepository, ReviewRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddRazorPages();
             
         }
@@ -51,7 +65,8 @@ namespace eMarketApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSession();
             app.UseEndpoints(endpoints =>
             {

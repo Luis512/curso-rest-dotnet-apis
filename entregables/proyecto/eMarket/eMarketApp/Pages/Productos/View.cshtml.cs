@@ -1,6 +1,7 @@
 ﻿using eMarketApp.Helpers;
 using eMarketApp.Repositories;
 using eMarketDomain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace eMarketApp.Pages.Productos
 {
+    [Authorize]
     public class ViewModel : PageModel
     {
         private readonly IProductRepository _productRepository;
@@ -51,7 +53,7 @@ namespace eMarketApp.Pages.Productos
             if (SessionHelper.GetObject<Cart>(HttpContext.Session, "CART") == null)
             {
                 var carrito = new Cart();
-                carrito.Total += product.Price;
+                carrito.Total = product.Price;
                 carrito.Status = "PENDING";
                 carrito.Products = new List<Product>();
                 carrito.Products.Add(product);
@@ -61,24 +63,24 @@ namespace eMarketApp.Pages.Productos
             {
                 var cart = SessionHelper.GetObject<Cart>(HttpContext.Session, "CART");
                 cart.Products.Add(product);
+                cart.Total = cart.Total + product.Price;
                 SessionHelper.SetObject(HttpContext.Session, "CART", cart);
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddReview(int id)
-        {
-            _logger.LogError($"---------{id}");
+        {          
 
            review.IdProduct = id;
-            review.IdUser = 123456;
-            _logger.LogError($"---------{review.IdProduct} - {review.IdUser} - {review.Description}");
-            var response = await _reviewRepository.AddReview(review);
+           review.IdUser = 123456;
+           
+           var response = await _reviewRepository.AddReview(review);
             if (response)
             {
                 return await this.OnGet(id);
-            }
-            return RedirectToPage("/Error");
+            } 
+           return RedirectToPage("/Error");
         }
     }
 }

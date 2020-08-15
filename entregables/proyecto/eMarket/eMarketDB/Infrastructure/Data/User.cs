@@ -15,6 +15,9 @@ namespace eMarketDB.Infrastructure.Data
         public string Name { get; set; }
         public string Direction { get; set; }
         public string Country { get; set; }
+        public string Telefono { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual ICollection<Reviews> Reviews { get; set; }
