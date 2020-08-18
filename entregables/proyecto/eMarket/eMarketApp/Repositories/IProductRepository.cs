@@ -12,6 +12,8 @@ namespace eMarketApp.Repositories
 
         Task<List<Product>> GetProductsByCategory(int id);
 
+        Task<List<Product>> GetProductsByOrder(int id);
+
         Task<bool> AddProduct(Product product);
 
         Task<bool> DeleteProduct(int id);

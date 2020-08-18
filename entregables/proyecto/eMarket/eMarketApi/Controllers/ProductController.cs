@@ -59,6 +59,17 @@ namespace eMarketApi.Controllers
         }
 
         /// <summary>
+        /// Gets a list of products by an specific category.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("ByOrder/{id}")]
+        public ActionResult<List<Product>> GetByOrder(int id)
+        {
+            return Ok(_productRepository.GetProductsByOrder(id));
+        }
+
+        /// <summary>
         /// Creates a new product.
         /// </summary>
         /// <param name="product">A <see cref="Product"/> to be created.</param>

@@ -11,6 +11,8 @@ namespace eMarketApi.Repositories
 
         List<Product> GetProductsByCategory(int id);
 
+        List<Product> GetProductsByOrder(int id);
+
         void Post(Product product);
 
         void Delete(int id);

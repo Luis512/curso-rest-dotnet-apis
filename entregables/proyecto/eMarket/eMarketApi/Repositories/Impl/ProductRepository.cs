@@ -54,6 +54,18 @@ namespace eMarketApi.Repositories.Impl
             return products;
         }
 
+        public List<Product> GetProductsByOrder(int id)
+        {
+            List<Product> products = new List<Product>();
+            var productsByOrder = _context.ProductByOrder.Where(_ => _.IdOrder.Equals(id)).ToList();
+            foreach (var prdt in productsByOrder)
+            {
+                products.Add(_mapper.Map<Product>(_context.Products.Find(prdt.IdProduct)));
+            }
+
+            return products;
+        }
+
         public async void Post(Product product)
         {
             product.Id = new Random().Next(1, 10000);

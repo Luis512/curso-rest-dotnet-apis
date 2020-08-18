@@ -88,5 +88,14 @@ namespace eMarketApp.Repositories.Impl
                 return JsonConvert.DeserializeObject<List<Product>>(response);
             }
         }
+
+        public async Task<List<Product>> GetProductsByOrder(int id)
+        {
+            using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
+            {
+                var response = await client.GetStringAsync($"{_endpoints.Endpoints.Producto}/ByOrder/{id}");
+                return JsonConvert.DeserializeObject<List<Product>>(response);
+            }
+        }
     }
 }

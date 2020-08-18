@@ -44,6 +44,7 @@ namespace eMarketApp
             services.AddSingleton<IProductRepository, ProductRepository>();
             services.AddSingleton<IReviewRepository, ReviewRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<ICartRepository, CartRepository>();
             services.AddRazorPages();
             
         }

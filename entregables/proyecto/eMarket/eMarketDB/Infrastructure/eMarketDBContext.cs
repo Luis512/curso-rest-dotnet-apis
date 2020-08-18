@@ -65,7 +65,9 @@ namespace eMarketDB.Infrastructure.Data
 
             modelBuilder.Entity<ProductByOrder>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.IdOrder)
                     .HasColumnName("idOrder")
@@ -76,13 +78,13 @@ namespace eMarketDB.Infrastructure.Data
                     .HasColumnType("numeric(18, 0)");
 
                 entity.HasOne(d => d.IdOrderNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProductByOrder)
                     .HasForeignKey(d => d.IdOrder)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProductByOrder_Orders");
 
                 entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProductByOrder)
                     .HasForeignKey(d => d.IdProduct)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProductByOrder_Products");

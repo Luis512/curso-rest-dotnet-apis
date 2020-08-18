@@ -43,7 +43,7 @@ namespace eMarketApp.Pages.Categorias
             if (SessionHelper.GetObject<Cart>(HttpContext.Session, "CART") == null)
             {
                 var carrito = new Cart();
-                carrito.Total = product.Price;
+                carrito.Total = (decimal)product.Price;
                 carrito.Status = "PENDING";
                 carrito.Products = new List<Product>();
                 carrito.Products.Add(product);
@@ -52,7 +52,7 @@ namespace eMarketApp.Pages.Categorias
             else
             {
                 var cart = SessionHelper.GetObject<Cart>(HttpContext.Session, "CART");
-                cart.Total = cart.Total + product.Price;
+                cart.Total = cart.Total + (decimal)product.Price;
                 cart.Products.Add(product);
                 SessionHelper.SetObject(HttpContext.Session, "CART", cart);
             }

@@ -7,6 +7,7 @@ namespace eMarketDB.Infrastructure.Data
     {
         public Products()
         {
+            ProductByOrder = new HashSet<ProductByOrder>();
             Reviews = new HashSet<Reviews>();
         }
 
@@ -17,6 +18,7 @@ namespace eMarketDB.Infrastructure.Data
         public decimal? Price { get; set; }
 
         public virtual Categories IdCategoryNavigation { get; set; }
+        public virtual ICollection<ProductByOrder> ProductByOrder { get; set; }
         public virtual ICollection<Reviews> Reviews { get; set; }
     }
 }

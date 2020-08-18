@@ -42,6 +42,7 @@ namespace eMarketApi
             services.AddSingleton<IProductRepository, ProductRepository>();
             services.AddSingleton<IReviewRepository, ReviewRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<ICartRepository, CartRepository>();
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<eMarketDBContext>(options =>
