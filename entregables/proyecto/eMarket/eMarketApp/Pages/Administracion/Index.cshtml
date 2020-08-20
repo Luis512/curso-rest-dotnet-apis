@@ -1,0 +1,128 @@
+﻿@page
+@model eMarketApp.Pages.Administracion.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-category-tab" data-toggle="pill" href="#v-pills-category" role="tab" aria-controls="v-pills-category" aria-selected="true">Categoria</a>
+                <a class="nav-link" id="v-pills-product-tab" data-toggle="pill" href="#v-pills-product" role="tab" aria-controls="v-pills-product" aria-selected="false">Productos</a>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-category" role="tabpanel" aria-labelledby="v-pills-category-tab">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="jumbotron">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Categoria</span>
+                                @Html.EditorFor(m => m.category.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <input type="submit" class="btn btn-info my-2" asp-page-handler="AddCategory" value="Agregar Categoria" />
+                        </div>
+                    }
+                    @using (Html.BeginForm())
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+
+                                    <th scope="col">Acciones</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cat in Model.categoryList)
+                                {
+                                    <tr>
+                                        <td scope="row">@cat.Name</td>
+
+                                        <td scope="row">
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-info my-2" asp-area="" asp-page="Edit/Category" asp-route-id="@cat.Id">Editar</a>
+                                                <input type="submit" class="btn btn-danger my-2" asp-page-handler="DeleteCategory" asp-route-id="@cat.Id" value="Eliminar" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+                <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-product-tab">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="jumbotron">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Producto</span>
+                                @Html.EditorFor(m => m.product.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Categoria</span>
+                                @Html.DropDownListFor(m => m.product.IdCategory,
+                                        Model.categoryDropdown,
+                                        "Select a category",
+                                        new { @class = "custom-select" })
+
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Precio</span>
+                                <span class="input-group-text">$</span>
+                                @Html.EditorFor(m => m.product.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Cantidad Disponible</span>
+                                @Html.EditorFor(m => m.product.Stock, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <input type="submit" class="btn btn-info my-2" asp-page-handler="AddProduct" value="Agregar Producto" />
+                        </div>
+                    }
+                    @using (Html.BeginForm())
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Acciones</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var prod in Model.productList)
+                                {
+                                    <tr>
+                                        <td scope="row">@prod.Name</td>
+                                        <td scope="row">@prod.Price</td>
+                                        <td scope="row">@prod.Stock</td>
+                                        <td scope="row">
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-info my-2" asp-area="" asp-page="Edit/Product" asp-route-id="@prod.Id">Editar</a>
+                                                <input type="submit" class="btn btn-sm btn-danger my-2" asp-page-handler="DeleteProduct" asp-route-id="@prod.Id" value="Eliminar" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        alert("tets");
+    });
+</script>

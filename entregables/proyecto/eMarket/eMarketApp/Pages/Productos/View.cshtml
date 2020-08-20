@@ -1,0 +1,87 @@
+﻿@page "{id:int}"
+@model eMarketApp.Pages.Productos.ViewModel
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <div class="jumbotron">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Producto</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.product.Name" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Categoria</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.productCategory.Name" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Precio</span>
+            <span class="input-group-text">$</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.product.Price" />
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Cantidad Disponible</span>
+            <input type="text" class="form-control" disabled="disabled" value="@Model.product.Stock" />
+        </div>
+        <hr class="my-4">
+        <form  method="post">
+            <input type="submit" class="btn btn-info my-2" asp-page-handler="AddProductCart" asp-route-id="@Model.product.Id" value="Agregar a carrito" />
+        </form>       
+    </div>
+
+<form method="post">
+    <div class="jumbotron">
+        <div class="input-group mb-3">
+            @Html.TextAreaFor(m => m.review.Description, new {
+           cols = "80",
+           rows = "5",
+           htmlAttributes = new { @class = "form-control"}})
+            <div class="input-group-append">
+                <input type="submit" class="btn btn-info" asp-page-handler="AddReview" asp-route-id="@Model.product.Id" value="Agregar reseña" />
+            </div>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Review</th>
+            <th scope="col">Puntuacion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model.reviews)
+        {
+        <tr>
+            <th scope="row">@review.IdUser</th>
+            <td>@review.Description</td>
+            <td>
+                <div class="rating-input">
+                    @{
+                        int i = 1;
+                        while (i <= 5)
+                        {
+                            if (review.Rating >= i)
+                            {
+                                <i class="fa fa-star" data-value="@i"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-star-o" data-value="@i"></i>
+                            }
+                            i++;
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

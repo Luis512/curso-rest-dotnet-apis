@@ -1,0 +1,71 @@
+﻿@page
+@model eMarketApp.Pages.User.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div id="modal-placeholder"></div>
+<div class="jumbotron">
+    <div class="input-group mb-3">
+        <span class="input-group-text">Usuario</span>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Username" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Nombre</span>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Name" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Direccion</span>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Direction" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Pais</span>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Country" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Telefono</span>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Usuario.Telefono" />
+    </div>
+    <hr class="my-4">
+    <form method="post">
+        <input type="submit" class="btn btn-danger my-2" asp-page-handler="SignOff" value="Cerrar Sesion" />
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Orden #</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.PastOrders)
+        {
+            <tr>
+                <th scope="row">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-id=@order.Id>@order.Id</button>
+                </th>
+                <td>@order.ProcessDate.ToString()</td>
+                <td>$ @order.Total </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            var placeholderElement = $('#modal-placeholder');
+            $('button[data-toggle="modal"]').click(function (event) {
+                var url = "/User?id=" + $(this).data('id')+"&handler=OrderModalPartial";                
+                $.get(url).done(function (data) {
+                    placeholderElement.html(data);
+                    placeholderElement.find('.modal').modal('show');
+                });
+            });
+        });
+    </script>
+}

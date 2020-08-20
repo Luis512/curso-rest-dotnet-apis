@@ -1,0 +1,101 @@
+﻿@page
+@model eMarketApp.Pages.Carrito.ViewModel
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <div class="py-5">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Carrito de Compras</span>
+                    <span class="badge badge-secondary badge-pill">@Model.ProductsAmount</span>
+                </h4>
+                @if (Model.carrito != null)
+                {
+                    <ul class="list-group mb-3">
+                        @foreach (var prod in Model.carrito.Products)
+                        {
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">@prod.Name </h6>
+                            </div>
+                           
+                            <span class="text-muted">@prod.Quantity X @prod.Price</span>
+                        </li>
+                        }
+
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total (USD)</span>
+                            <strong>@Model.carrito.Total</strong>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <strong>Tu carrito esta vacio.</strong>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+        <div class="container">
+            <div class="py-5 text-left">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Pago</span>
+                </h4>
+                <div class="d-block my-3">
+                    <div class="custom-control custom-radio">
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                        <label class="custom-control-label" for="credit">Credit card</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                        <label class="custom-control-label" for="debit">Debit card</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-expiration">Expiration</label>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Expiration date required
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-cvv">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <form method="post">
+                    <input type="submit" class="btn btn-danger my-2" asp-page-handler="Checkout" value="Checkout" />
+                </form>
+            </div>
+        </div>
+</section>
+
+
