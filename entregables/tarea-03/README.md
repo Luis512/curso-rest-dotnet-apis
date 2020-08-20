@@ -13,6 +13,8 @@
     - En sistemas grandes y/o complejos, existe interdependecia(por ende agrega complejidad) entre llamados, por lo que muchas veces un llamado de lectura necesite hacer una escritura o viceversa.
     
  2. Investigar sobre el uso de la libreria FluentAssertions para ASP.NET Core y aplicarlo en el ejercicio hecho en clase de la sesion 08 (endpoints de Customer y Product)
+ Ver CustomerTest.cs y ProductTest.cs en WebApi > Test
+ 
  ```csharp
  public class CustomerTest
  {
