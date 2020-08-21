@@ -28,11 +28,21 @@
                 <tbody>
                     @foreach (var prod in Model.products)
                     {
-                            <tr>
-                            <td scope="row">@prod.Name</td>
-                            <td scope="row">@prod.Price</td>
-                            <td scope="row">@prod.Stock</td>
-                            <td scope="row"> <input type="submit" class="btn btn-danger my-2" asp-page-handler="AddToCart" asp-route-idProd="@prod.Id" asp-route-idCat="@Model.categoria.Id" value="Agregar a carrito" /></td>
+                    <tr>
+                        <td scope="row">@prod.Name</td>
+                        <td scope="row">@prod.Price</td>
+                        <td scope="row">@prod.Stock</td>
+                        <td scope="row">
+                            @if (@prod.Stock > 0)
+                            {
+                                <input type="submit" class="btn btn-info my-2" asp-page-handler="AddToCart" asp-route-idProd="@prod.Id" asp-route-idCat="@Model.categoria.Id" value="Agregar a carrito" />
+
+                            }
+                            else
+                            {
+                                <span class="btn text-center alert-danger my-2">Producto no disponible.</span>
+                            }
+                        </td>
                         </tr>
                     }
                 </tbody>

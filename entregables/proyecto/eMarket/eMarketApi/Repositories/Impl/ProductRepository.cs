@@ -4,6 +4,7 @@ using eMarketDomain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace eMarketApi.Repositories.Impl
 {
@@ -18,7 +19,7 @@ namespace eMarketApi.Repositories.Impl
             _mapper = mapper;
             _context = context;
         }
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             var product = _context.Products.Where(_ => _.Id.Equals(id)).FirstOrDefault();
             _context.Products.Remove(product);
@@ -66,11 +67,12 @@ namespace eMarketApi.Repositories.Impl
             return products;
         }
 
-        public async void Post(Product product)
+        public async Task Post(Product product)
         {
             product.Id = new Random().Next(1, 10000);
             _context.Products.Add(_mapper.Map<Products>(product));
             await _context.SaveChangesAsync();
         }
+
     }
 }

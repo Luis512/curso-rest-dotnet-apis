@@ -1,5 +1,6 @@
 ﻿using eMarketDomain.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eMarketApi.Repositories
 {
@@ -13,8 +14,8 @@ namespace eMarketApi.Repositories
 
         List<Product> GetProductsByOrder(int id);
 
-        void Post(Product product);
+        Task Post(Product product);
 
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

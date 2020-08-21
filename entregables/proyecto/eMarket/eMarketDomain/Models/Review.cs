@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace eMarketDomain.Models
+﻿namespace eMarketDomain.Models
 {
     public class Review
     {

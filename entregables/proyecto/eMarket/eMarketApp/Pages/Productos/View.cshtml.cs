@@ -4,6 +4,7 @@ using eMarketDomain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,10 @@ namespace eMarketApp.Pages.Productos
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IReviewRepository _reviewRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ILogger<ViewModel> _logger;
+
+        public List<SelectListItem> ratingDropdown { get; set; } = new List<SelectListItem>();
 
         public Product product { get; set; } 
         public Category productCategory { get; set; }
@@ -27,12 +31,14 @@ namespace eMarketApp.Pages.Productos
         [BindProperty]
         public Review review { get; set; }
 
-        public ViewModel(IProductRepository productRepository, ICategoryRepository categoryRepository, IReviewRepository reviewRepository, ILogger<ViewModel> logger)
+        public ViewModel(IProductRepository productRepository, ICategoryRepository categoryRepository, IReviewRepository reviewRepository, IUserRepository userRepository,  ILogger<ViewModel> logger)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _reviewRepository = reviewRepository;
+            _userRepository = userRepository;
             _logger = logger;
+            ratingDropdown = FillRatingDropdown();
         }
 
         public async Task<IActionResult> OnGet(int id)
@@ -79,17 +85,31 @@ namespace eMarketApp.Pages.Productos
         }
 
         public async Task<IActionResult> OnPostAddReview(int id)
-        {          
-
-           review.IdProduct = id;
-           review.IdUser = 123456;
-           
-           var response = await _reviewRepository.AddReview(review);
-            if (response)
+        {
+            var user = await _userRepository.GetInformation(User.Identity.Name);
+            if (user != null)
             {
-                return await this.OnGet(id);
-            } 
+                review.IdProduct = id;
+                review.IdUser = user.Id;
+
+                var response = await _reviewRepository.AddReview(review);
+                if (response)
+                {
+                    review = new Review();
+                    return await this.OnGet(id);
+                }
+            }
            return RedirectToPage("/Error");
+        }
+
+        private  List<SelectListItem> FillRatingDropdown()
+        {
+            var ratings = new List<SelectListItem>();
+            for(int i = 1; i <= 5; i++)
+            {
+                ratings.Add(new SelectListItem($"{i} Estrella(s)", i.ToString()));
+            }
+            return ratings;
         }
     }
 }

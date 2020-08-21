@@ -1,5 +1,6 @@
 ﻿using eMarketDomain.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eMarketApi.Repositories
 {
@@ -9,6 +10,6 @@ namespace eMarketApi.Repositories
 
         Review Get(int id);
 
-        void Post(Review review);
+        Task Post(Review review);
     }
 }

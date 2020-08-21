@@ -38,15 +38,15 @@ namespace eMarketApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddSingleton<ICategoryRepository, CategoryRepository>();
-            services.AddSingleton<IProductRepository, ProductRepository>();
-            services.AddSingleton<IReviewRepository, ReviewRepository>();
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<ICartRepository, CartRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<eMarketDBContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("eMarketDatabase")), ServiceLifetime.Transient);
+                options.UseSqlServer(Configuration.GetConnectionString("eMarketDatabase")), ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

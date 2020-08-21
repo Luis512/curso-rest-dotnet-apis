@@ -4,6 +4,7 @@ using eMarketDomain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace eMarketApi.Repositories.Impl
 {
@@ -36,7 +37,7 @@ namespace eMarketApi.Repositories.Impl
             return reviews;
         }
 
-        public async void Post(Review review)
+        public async Task Post(Review review)
         {
             Reviews newReview = _mapper.Map<Reviews>(review);
             newReview.Id = new Random().Next(1, 10000);

@@ -8,35 +8,54 @@
 
     <div class="jumbotron">
         <div class="input-group mb-3">
-            <span class="input-group-text">Producto</span>
+            <span class="input-group-text text-light  bg-dark">Producto</span>
             <input type="text" class="form-control" disabled="disabled" value="@Model.product.Name" />
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text">Categoria</span>
+            <span class="input-group-text text-light bg-dark">Categoria</span>
             <input type="text" class="form-control" disabled="disabled" value="@Model.productCategory.Name" />
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text">Precio</span>
-            <span class="input-group-text">$</span>
+            <span class="input-group-text text-light bg-dark">Precio</span>
+            <span class="input-group-text text-light bg-dark">$</span>
             <input type="text" class="form-control" disabled="disabled" value="@Model.product.Price" />
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text">Cantidad Disponible</span>
+            <span class="input-group-text text-light bg-dark">Cantidad Disponible</span>
             <input type="text" class="form-control" disabled="disabled" value="@Model.product.Stock" />
         </div>
         <hr class="my-4">
-        <form  method="post">
-            <input type="submit" class="btn btn-info my-2" asp-page-handler="AddProductCart" asp-route-id="@Model.product.Id" value="Agregar a carrito" />
-        </form>       
+        <form method="post">
+            @if (Model.product.Stock > 0)
+            {
+                <input type="submit" class="btn btn-info my-2" asp-page-handler="AddProductCart" asp-route-id="@Model.product.Id" value="Agregar a carrito" />
+            }
+            else
+            {
+                <span class="input-group-text text-center alert-danger">Producto no disponible.</span>
+            }
+            </form>       
     </div>
 
 <form method="post">
     <div class="jumbotron">
         <div class="input-group mb-3">
-            @Html.TextAreaFor(m => m.review.Description, new {
-           cols = "80",
-           rows = "5",
-           htmlAttributes = new { @class = "form-control"}})
+           
+            <div class="input-group mb-3">
+
+                @Html.TextAreaFor(m => m.review.Description, new
+                   {
+                  cols = "80",
+                  rows = "5",
+                  htmlAttributes = new { @class = "input-group-text" }
+                   })
+
+                @Html.DropDownListFor(m => m.review.Rating,
+                        Model.ratingDropdown,
+                        "Select a rating",
+                        new { @class = "custom-select" })
+
+            </div>
             <div class="input-group-append">
                 <input type="submit" class="btn btn-info" asp-page-handler="AddReview" asp-route-id="@Model.product.Id" value="Agregar reseña" />
             </div>
