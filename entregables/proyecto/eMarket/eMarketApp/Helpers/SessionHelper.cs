@@ -15,6 +15,11 @@ namespace eMarketApp.Helpers
             var value = session.GetString(key);
             return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
         }
+
+        public static void CleanCart(this ISession session)
+        {
+            session.Clear();
+        }
     }
     
 }

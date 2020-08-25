@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using eMarketApp.Helpers;
 using eMarketApp.Repositories;
@@ -43,9 +44,10 @@ namespace eMarketApp.Pages.Categorias
             if (SessionHelper.GetObject<Cart>(HttpContext.Session, "CART") == null)
             {
                 var carrito = new Cart();
-                carrito.Total = (decimal)product.Price;
+                carrito.Total = (decimal)product.Price;                
                 carrito.Status = "PENDING";
                 carrito.Products = new List<Product>();
+                product.Quantity = 1;
                 carrito.Products.Add(product);
                 SessionHelper.SetObject(HttpContext.Session, "CART", carrito);
             }
@@ -53,6 +55,14 @@ namespace eMarketApp.Pages.Categorias
             {
                 var cart = SessionHelper.GetObject<Cart>(HttpContext.Session, "CART");
                 cart.Total = cart.Total + (decimal)product.Price;
+                if (cart.Products.Any(p => p.Id == idProd))
+                {
+                    cart.Products = cart.Products.Where(p => p.Id == idProd).Select(u => { u.Quantity = u.Quantity + 1; return u; }).ToList();
+                }
+                else
+                {
+                    cart.Products.Add(product);
+                }
                 cart.Products.Add(product);
                 SessionHelper.SetObject(HttpContext.Session, "CART", cart);
             }

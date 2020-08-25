@@ -92,5 +92,17 @@ namespace eMarketApi.Controllers
             await Task.Run(() => _productRepository.Delete(id));
             return Ok();
         }
+
+        [HttpPut]
+        public async Task<ActionResult<Product>> Put(Product product)
+        {
+           var result = await _productRepository.Put(product);
+           if(!result)
+           {
+                return BadRequest();
+           }
+
+           return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+        }
     }
 }

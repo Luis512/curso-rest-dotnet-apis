@@ -1,4 +1,5 @@
-﻿using eMarketApp.Repositories;
+﻿using eMarketApp.Helpers;
+using eMarketApp.Repositories;
 using eMarketDomain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -45,6 +46,7 @@ namespace eMarketApp.Pages.User
             {
                 var authenticationManager = Request.HttpContext; 
                 await authenticationManager.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                SessionHelper.CleanCart(HttpContext.Session);
             }
             catch (Exception ex)
             {

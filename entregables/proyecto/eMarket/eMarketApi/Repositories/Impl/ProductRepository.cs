@@ -74,5 +74,19 @@ namespace eMarketApi.Repositories.Impl
             await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> Put(Product product)
+        {
+            Products model = _context.Products.Where(_ => _.Id.Equals(product.Id)).FirstOrDefault();
+
+            if (model == null)
+                return false;
+            model.Name = product.Name;
+            model.Price = product.Price;
+            model.Stock = product.Stock;
+
+            _context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

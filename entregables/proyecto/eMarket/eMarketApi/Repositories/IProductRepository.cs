@@ -17,5 +17,7 @@ namespace eMarketApi.Repositories
         Task Post(Product product);
 
         Task Delete(int id);
+
+        Task<bool> Put(Product product);
     }
 }

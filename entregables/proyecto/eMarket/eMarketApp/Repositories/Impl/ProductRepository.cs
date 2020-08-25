@@ -97,5 +97,16 @@ namespace eMarketApp.Repositories.Impl
                 return JsonConvert.DeserializeObject<List<Product>>(response);
             }
         }
+
+        public async Task<bool> UpdateProduct(Product product)
+        {
+            using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
+            {
+                var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+                var response = await client.PutAsync(_endpoints.Endpoints.Producto, httpContent);
+                return response.StatusCode == HttpStatusCode.Created;
+            }
+        }
     }
 }
