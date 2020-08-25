@@ -3,6 +3,17 @@
 @{
     ViewData["Title"] = "Product";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+
+    var isUpdateProductNull = false;
+    var isProductUpdated = false;
+    if (ViewData["UpdateProduct"] != null)
+    {
+        isProductUpdated = (bool)ViewData["UpdateProduct"];
+    }
+    else
+    {
+        isUpdateProductNull = true;
+    }
 }
 
 <h1 class="font-weight-light text-center text-lg-center mt-4 mb-0">Editar Producto</h1>
@@ -12,9 +23,7 @@
 @using (Html.BeginForm())
 {
     <div class="form-row">
-
-
-            <input type="hidden" asp-for="product.Id" value="@Model.product.Id" />
+        <input type="hidden" asp-for="product.Id" value="@Model.product.Id" />
         <div class="col-md-4 mb-3">
             <label for="validationDefault01">Produto</label>
             @Html.EditorFor(m => m.product.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -38,4 +47,19 @@
         </div>
     </div>
     <input type="submit" class="btn btn-info my-2" asp-page-handler="UpdateProduct" value="Actualizar" />
+}
+@if (!isUpdateProductNull)
+{
+    if (isProductUpdated)
+    {
+        <div class="alert  alert-success" role="alert">
+            Producto Actualizado correctamente.
+        </div>
+    }
+    else
+    {
+        <div class="alert  alert-danger" role="alert">
+            Hubo un error al actualizar el producto. Intentelo mas tarde.
+        </div>
+    }
 }

@@ -29,7 +29,7 @@ namespace eMarketApp.Pages.Login
         {
             try
             {
-               
+                ViewData.Add("Login", true);
                 if (this.User.Identity.IsAuthenticated)
                 {
                     _logger.LogWarning($"[OnGet] User logged: {User.Identity.Name}");
@@ -53,7 +53,8 @@ namespace eMarketApp.Pages.Login
                 await SignInUser(loginUser.Username, true);
                 return this.RedirectToPage("/Home");
             }
-            return RedirectToPage("/Error");
+            ViewData.Add("Login", false);
+            return Page();
         }
 
         private async Task SignInUser(string username, bool isPersistent)

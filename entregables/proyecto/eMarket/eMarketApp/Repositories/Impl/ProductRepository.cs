@@ -45,8 +45,15 @@ namespace eMarketApp.Repositories.Impl
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
             {
-                var response = await client.GetStringAsync($"{_endpoints.Endpoints.Producto}/{id}");
-                return JsonConvert.DeserializeObject<Product>(response);
+                try
+                {
+                    var response = await client.GetStringAsync($"{_endpoints.Endpoints.Producto}/{id}");
+                    return JsonConvert.DeserializeObject<Product>(response);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
 
