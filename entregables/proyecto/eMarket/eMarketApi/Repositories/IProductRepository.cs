@@ -14,7 +14,7 @@ namespace eMarketApi.Repositories
 
         List<Product> GetProductsByOrder(int id);
 
-        Task Post(Product product);
+        Task<bool> Post(Product product);
 
         Task Delete(int id);
 

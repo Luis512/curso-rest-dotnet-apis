@@ -1,6 +1,6 @@
 ﻿using eMarketDomain.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eMarketApi.Repositories
 {
@@ -13,5 +13,7 @@ namespace eMarketApi.Repositories
         void Post(Category category);
 
         void Delete(int id);
+
+        Task<bool> Put(Category category);
     }
 }

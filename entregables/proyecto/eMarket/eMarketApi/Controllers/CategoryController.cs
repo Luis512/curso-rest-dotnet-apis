@@ -68,5 +68,17 @@ namespace eMarketApi.Controllers
             await Task.Run(() => _categoryRepository.Delete(id));
             return Ok();
         }
+
+        /// <summary>
+        /// Updates an specific category.
+        /// </summary>
+        /// <param name="category">An updated <see cref="Category"/></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<ActionResult<Category>> Put(Category category)
+        {
+            var result = await _categoryRepository.Put(category);
+            return result ? (ActionResult)Ok() : BadRequest();
+        }
     }
 }

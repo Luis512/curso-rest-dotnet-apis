@@ -4,6 +4,7 @@ using eMarketDomain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace eMarketApi.Repositories.Impl
@@ -67,11 +68,20 @@ namespace eMarketApi.Repositories.Impl
             return products;
         }
 
-        public async Task Post(Product product)
+        public async Task<bool> Post(Product product)
         {
-            product.Id = new Random().Next(1, 10000);
-            _context.Products.Add(_mapper.Map<Products>(product));
-            await _context.SaveChangesAsync();
+            try
+            {
+                product.Id = new Random().Next(1, 10000);
+                _context.Products.Add(_mapper.Map<Products>(product));
+                await _context.SaveChangesAsync();                
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+
         }
 
         public async Task<bool> Put(Product product)

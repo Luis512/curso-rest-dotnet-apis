@@ -3,7 +3,47 @@
 @{
     ViewData["Title"] = "Category";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+
+    var isUpdateCatNull = false;
+    var isCatUpdated = false;
+    if (ViewData["UpdateCat"] != null)
+    {
+        isCatUpdated = (bool)ViewData["UpdateCat"];
+    }
+    else
+    {
+        isUpdateCatNull = true;
+    }
 }
 
-<h1>Category</h1>
+<h1 class="font-weight-light text-center text-lg-center mt-4 mb-0">Editar Categoria</h1>
+
+<hr class="mt-2 mb-5">
+
+@using (Html.BeginForm())
+{
+    <div class="form-row">
+        <input type="hidden" asp-for="category.Id" value="@Model.category.Id" />
+        <div class="col-md-4 mb-3">
+            <label for="validationDefault01">Nombre</label>
+            @Html.EditorFor(m => m.category.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <input type="submit" class="btn btn-info my-2" asp-page-handler="UpdateCategory" value="Actualizar" />
+}
+@if (!isUpdateCatNull)
+{
+    if (isCatUpdated)
+    {
+        <div class="alert  alert-success" role="alert">
+            Categoria Actualizada correctamente.
+        </div>
+    }
+    else
+    {
+        <div class="alert  alert-danger" role="alert">
+            Hubo un error al actualizar la categoria. Intentelo mas tarde.
+        </div>
+    }
+}
 

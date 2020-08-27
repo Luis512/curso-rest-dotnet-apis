@@ -13,9 +13,9 @@ namespace eMarketApi.Controllers
         private readonly IProductRepository _productRepository;
 
         /// <summary>
-        /// Constructor that manages the products section.
+        /// Constructor of <see cref="ProductController"/>
         /// </summary>
-        /// <param name="productRepository"></param>
+        /// <param name="productRepository">Dependecy injection of <see cref="IProductRepository"/></param>
         public ProductController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
@@ -76,8 +76,12 @@ namespace eMarketApi.Controllers
         /// <returns>A <see cref="CreatedAtActionResult"/></returns>
         [HttpPost]
         public async Task<ActionResult<Product>> Post(Product product)
-        {
-            await Task.Run(() => _productRepository.Post(product));            
+        {            
+            var result = await _productRepository.Post(product);
+            if (!result)
+            {
+                return BadRequest();
+            }
             return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
         }
 
@@ -93,6 +97,11 @@ namespace eMarketApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Updates an specific product.
+        /// </summary>
+        /// <param name="product">An updated <see cref="Product"/></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult<Product>> Put(Product product)
         {

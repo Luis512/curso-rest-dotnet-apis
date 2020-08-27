@@ -12,11 +12,20 @@ namespace eMarketApi.Controllers
     {
         private readonly ICartRepository _cartRepository;
 
+        /// <summary>
+        /// Constructor of <see cref="CartController"/>
+        /// </summary>
+        /// <param name="cartRepository">Dependecy injection of <see cref="ICartRepository"/></param>
         public CartController(ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
         }
 
+        /// <summary>
+        /// Create an entry for shopping cart.
+        /// </summary>
+        /// <param name="cart">A <see cref="Cart"/> object to be created.</param>
+        /// <returns>True if the cart was created, otherwise returns false.</returns>
         [HttpPost]
         public async Task<ActionResult<bool>> Post(Cart cart)
         {
@@ -24,6 +33,11 @@ namespace eMarketApi.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Gets the past orders of an specific user.
+        /// </summary>
+        /// <param name="username">Username.</param>
+        /// <returns>A <see cref="List{T}"/> of <see cref="Order"/>.</returns>
         [HttpGet("{username}")]
         public ActionResult<List<Order>> Get(string username)
         {

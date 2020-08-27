@@ -4,6 +4,7 @@ using eMarketDomain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace eMarketApp.Pages.Carrito
 {
@@ -30,12 +31,20 @@ namespace eMarketApp.Pages.Carrito
             return Page();
         }
 
-        public ActionResult OnPostCheckout()
+        public async Task<ActionResult> OnPostCheckout()
         {
             var cart = SessionHelper.GetObject<Cart>(HttpContext.Session, "CART");
             cart.Username = User.Identity.Name;
-            _cartRepository.Checkout(cart);
-            SessionHelper.SetObject(HttpContext.Session, "CART", null);
+            var result = await _cartRepository.Checkout(cart);
+            if (result)
+            {
+                ViewData.Add("Success", true);
+                SessionHelper.SetObject(HttpContext.Session, "CART", null);
+            }
+            else
+            {
+                ViewData.Add("Success", false);
+            }
             return OnGet();
         }
     }

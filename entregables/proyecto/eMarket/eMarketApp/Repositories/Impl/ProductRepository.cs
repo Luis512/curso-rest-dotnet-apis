@@ -87,6 +87,11 @@ namespace eMarketApp.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Gets a list of products by category
+        /// </summary>
+        /// <param name="id">Category's id</param>
+        /// <returns>A <see cref="List{T}"/> of <see cref="Product"/></returns>
         public async Task<List<Product>> GetProductsByCategory(int id)
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
@@ -96,6 +101,11 @@ namespace eMarketApp.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Gets a list of products by order
+        /// </summary>
+        /// <param name="id">Order's id</param>
+        /// <returns>A <see cref="List{T}"/> of <see cref="Product"/></returns>
         public async Task<List<Product>> GetProductsByOrder(int id)
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
@@ -105,6 +115,11 @@ namespace eMarketApp.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Updates an specific category
+        /// </summary>
+        /// <param name="product">A <see cref="Product"/> object.</param>
+        /// <returns></returns>
         public async Task<bool> UpdateProduct(Product product)
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })

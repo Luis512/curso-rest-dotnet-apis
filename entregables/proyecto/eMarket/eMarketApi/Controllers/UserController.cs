@@ -1,7 +1,5 @@
 ﻿using eMarketApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using eMarketDB.Infrastructure.Data;
 using eMarketDomain.Models;
 
 namespace eMarketApi.Controllers
@@ -13,7 +11,7 @@ namespace eMarketApi.Controllers
         private readonly IUserRepository _userRepository;
 
         /// <summary>
-        /// Controller that controlls the user section.
+        /// Constructor of <see cref="UserController"/>
         /// </summary>
         /// <param name="IUserRepository">Dependency injection of <see cref="IUserRepository"/></param>
         public UserController(IUserRepository userRepository)
@@ -21,7 +19,11 @@ namespace eMarketApi.Controllers
             _userRepository = userRepository;
         }
 
-
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="user">A <see cref="Usuario"/> object.</param>
+        /// <returns>True if the user was created succesfully, otherwise returns false.</returns>
         [HttpPost]
         public ActionResult Post(Usuario user)
         {
@@ -29,6 +31,11 @@ namespace eMarketApi.Controllers
             return userFound ? (ActionResult)Ok() : NotFound();
         }
 
+        /// <summary>
+        /// Gets an specific user.
+        /// </summary>
+        /// <param name="username">Username.</param>
+        /// <returns>A <see cref="Usuario"/> object.</returns>
         [HttpGet("{username}")]
         public ActionResult<Usuario> Get(string username)
         {

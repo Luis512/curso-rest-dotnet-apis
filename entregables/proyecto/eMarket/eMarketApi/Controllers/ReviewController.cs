@@ -12,7 +12,7 @@ namespace eMarketApi.Controllers
         private readonly IReviewRepository _reviewRepository;
 
         /// <summary>
-        /// Constructor thta manages the reviews section.
+        /// Constructor of <see cref="ReviewController"/>
         /// </summary>
         /// <param name="reviewRepository"></param>
         public ReviewController(IReviewRepository reviewRepository)
@@ -55,7 +55,6 @@ namespace eMarketApi.Controllers
         {
             await Task.Run(() => _reviewRepository.Post(review));
             return CreatedAtAction(nameof(Get), new { id = review.Id }, review);
-
         }             
     }
 }

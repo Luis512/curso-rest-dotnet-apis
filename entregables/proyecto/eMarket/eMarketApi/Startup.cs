@@ -38,13 +38,18 @@ namespace eMarketApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
+            //Adding dependecy injection classes
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddControllers();
+            
+            //Adding Automapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //Adding database context
             services.AddDbContext<eMarketDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("eMarketDatabase")), ServiceLifetime.Scoped);
         }

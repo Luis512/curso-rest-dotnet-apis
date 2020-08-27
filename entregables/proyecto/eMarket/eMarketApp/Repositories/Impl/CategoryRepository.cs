@@ -36,6 +36,11 @@ namespace eMarketApp.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Gets an specifics category by its id
+        /// </summary>
+        /// <param name="id">Category's id/param>
+        /// <returns></returns>
         public async Task<Category> GetCategoryById(int id)
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
@@ -45,6 +50,11 @@ namespace eMarketApp.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Creates a new category.
+        ///  </summary>
+        /// <param name="category"></param>
+        /// <returns>True if the category was created succesfully, otherwise returns false.</returns>
         public async Task<bool> AddCategory(Category category)
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
@@ -58,6 +68,11 @@ namespace eMarketApp.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Deletes an specific category by its id.
+        /// </summary>
+        /// <param name="id">Category's id/param>
+        /// <returns>True if the category was deleted succesfully, otherwise returns false.</returns>
         public async Task<bool> DeleteCategory(int id)
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
@@ -66,6 +81,22 @@ namespace eMarketApp.Repositories.Impl
                 if (response.StatusCode != HttpStatusCode.OK)
                     return false;
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Updates an specific category
+        /// </summary>
+        /// <param name="category">A <see cref="Category"/> object.</param>
+        /// <returns>True if the category was updated succesfully, otherwise returns false.</returns>
+        public async Task<bool> UpdateCategory(Category category)
+        {
+            using (var client = new HttpClient { BaseAddress = new Uri(_endpoints.BaseEndpoint) })
+            {
+                var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+                var response = await client.PutAsync(_endpoints.Endpoints.Categoria, httpContent);
+                return response.StatusCode == HttpStatusCode.Created;
             }
         }
     }

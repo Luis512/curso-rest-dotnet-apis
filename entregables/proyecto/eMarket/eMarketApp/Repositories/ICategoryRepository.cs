@@ -13,5 +13,7 @@ namespace eMarketApp.Repositories
         Task<bool> AddCategory(Category category);
 
         Task<bool> DeleteCategory(int id);
+        
+        Task<bool> UpdateCategory(Category category);
     }
 }
