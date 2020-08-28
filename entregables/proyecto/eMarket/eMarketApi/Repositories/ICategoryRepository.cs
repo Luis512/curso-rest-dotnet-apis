@@ -10,9 +10,9 @@ namespace eMarketApi.Repositories
 
         Category Get(int id);
 
-        void Post(Category category);
+        Task<bool> Post(Category category);
 
-        void Delete(int id);
+        Task<bool> Delete(int id);
 
         Task<bool> Put(Category category);
     }

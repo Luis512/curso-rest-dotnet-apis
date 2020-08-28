@@ -52,9 +52,9 @@ namespace eMarketApi.Controllers
         /// <returns>A <see cref="CreatedAtActionResult"/></returns>
         [HttpPost]
         public async Task<ActionResult<Category>> Post(Category category)
-        {
-            await Task.Run(() => _categoryRepository.Post(category));
-            return CreatedAtAction(nameof(Get), new { id = category.Id }, category);
+        {           
+            var result = await _categoryRepository.Post(category);
+            return result ? (ActionResult)CreatedAtAction(nameof(Get), new { id = category.Id }, category) : BadRequest();
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace eMarketApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await Task.Run(() => _categoryRepository.Delete(id));
-            return Ok();
+            var result = await _categoryRepository.Delete(id);
+            return result ? (ActionResult)Ok() : BadRequest();
         }
 
         /// <summary>

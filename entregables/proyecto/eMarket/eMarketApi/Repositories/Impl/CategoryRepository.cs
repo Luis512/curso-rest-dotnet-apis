@@ -28,12 +28,19 @@ namespace eMarketApi.Repositories.Impl
         /// Deletes a category by id.
         /// </summary>
         /// <param name="id"></param>
-        public async void Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-
-            var category = _context.Categories.Where(_ => _.Id.Equals(id)).FirstOrDefault();
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var category = _context.Categories.Where(_ => _.Id.Equals(id)).FirstOrDefault();
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -66,11 +73,19 @@ namespace eMarketApi.Repositories.Impl
         /// Creates a new category.
         /// </summary>
         /// <param name="category">A <see cref="Category"/></param>
-        public async void Post(Category category)
+        public async Task<bool> Post(Category category)
         {
-            category.Id = new Random().Next(1, 10000);
-            _context.Categories.Add(_mapper.Map<Categories>(category));
-            await _context.SaveChangesAsync();
+            try
+            {
+                category.Id = new Random().Next(1, 10000);
+                _context.Categories.Add(_mapper.Map<Categories>(category));
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>

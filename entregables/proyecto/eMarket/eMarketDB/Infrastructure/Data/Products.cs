@@ -16,6 +16,7 @@ namespace eMarketDB.Infrastructure.Data
         public decimal? Stock { get; set; }
         public decimal IdCategory { get; set; }
         public decimal? Price { get; set; }
+        public bool? Active { get; set; }
 
         public virtual Categories IdCategoryNavigation { get; set; }
         public virtual ICollection<ProductByOrder> ProductByOrder { get; set; }

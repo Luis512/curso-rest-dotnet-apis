@@ -20,17 +20,22 @@ namespace eMarketApi.Repositories.Impl
             _mapper = mapper;
             _context = context;
         }
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var product = _context.Products.Where(_ => _.Id.Equals(id)).FirstOrDefault();
-            _context.Products.Remove(product);
+            Products model = _context.Products.Where(_ => _.Id.Equals(id)).FirstOrDefault();
+            if (model == null)
+                return false;
+            model.Active = false;
+            _context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             await _context.SaveChangesAsync();
+            return true;
         }
 
         public List<Product> Get()
         {
             List<Product> products = new List<Product>();
-            foreach (var prdt in _context.Products)
+            var activeProducts = _context.Products.Where(_ => _.Active == true).ToList();
+            foreach (var prdt in activeProducts)
             {
                 products.Add(_mapper.Map<Product>(prdt));
             }
@@ -47,7 +52,7 @@ namespace eMarketApi.Repositories.Impl
         public List<Product> GetProductsByCategory(int id)
         {
             List<Product> products = new List<Product>();
-            var productsByCat = _context.Products.Where(_ => _.IdCategory.Equals(id));
+            var productsByCat = _context.Products.Where(_ => _.IdCategory.Equals(id) && _.Active == true);
             foreach (var prdt in productsByCat)
             {
                 products.Add(_mapper.Map<Product>(prdt));
@@ -73,7 +78,9 @@ namespace eMarketApi.Repositories.Impl
             try
             {
                 product.Id = new Random().Next(1, 10000);
-                _context.Products.Add(_mapper.Map<Products>(product));
+                Products prod = _mapper.Map<Products>(product);
+                prod.Active = true;
+                _context.Products.Add(prod);
                 await _context.SaveChangesAsync();                
             }
             catch (Exception)
