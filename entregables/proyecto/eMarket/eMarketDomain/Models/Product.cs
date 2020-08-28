@@ -13,6 +13,8 @@
         public int Quantity { get; set; }
 
         public int IdCategory { get; set; }
-        
+
+        public bool? Active { get; set; }
+
     }
 }
